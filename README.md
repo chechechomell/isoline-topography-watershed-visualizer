@@ -23,6 +23,7 @@ isoline-topography-watershed-visualizer/
 ├── parser.py              #Core Digital Elevation Model (DEM) data parser
 ├── requirements.txt       #project dependency and requirements
 └── README.md              #project documentations and technical report
+```
 
 ### 1. Data Ingestion Module (parser.py)
 The system uses a custom DigitalElevationModelParser class to ingest raw elevation grids safely and efficiently :
@@ -42,19 +43,27 @@ git clone [https://github.com/chechechomell/isoline-topography-watershed-visuali
 cd isoline-topography-watershed-visualizer
 
 2. Set Up the Virtual Environment with uv
+```text
 uv venv
+```
 
 To activate the environment:
+```text
 in Powershell: .venv\Scripts\Activate
 in macOS/Linux: source .venv/bin/activate
+```
 
 3. Install Dependencies
 Install the required packages listed in requirements.txt:
+```text
 uv pip install -r requirements.txt
+```
 
 4. Run the DEM Parser Test
 Execute the parser script to verify data loading and test the sample elevation grid:
+```text
 python parser.py
+```
 
 ## Project Development Roadmap
 
