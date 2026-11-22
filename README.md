@@ -18,11 +18,12 @@ The project is structured sectionally to separate data ingestion, numerical comp
 ```text
 isoline-topography-watershed-visualizer/
 │
-├── data/                  #for elevation grid datasets (e.g. sample_dem.csv)
-├── .venv/                 #python virtual environment (managed via uv)
-├── parser.py              #Core Digital Elevation Model (DEM) data parser
-├── requirements.txt       #project dependency and requirements
-└── README.md              #project documentations and technical report
+├── data/                  # For elevation grid datasets (e.g., sample_dem.csv)
+├── .venv/                 # Python virtual environment (managed via uv)
+├── parser.py              # Core Digital Elevation Model (DEM) data parser
+├── contour.py             # 2D isoline and filled contour generator
+├── requirements.txt       # Project dependencies and requirements
+└── README.md              # Project documentation and technical report
 ```
 
 ### 1. Data Ingestion Module (parser.py)
@@ -31,6 +32,13 @@ The system uses a custom DigitalElevationModelParser class to ingest raw elevati
 NumPy Integration : Built using np.loadtxt to read delimited elevation text and CSV grids directly into 2D floating-point arrays. This will avoids compiled binary DLL conflicts (such as those associated with Pandas in restricted environments) while maintaining maximum computational performance.
 
 Topographic Statistics Extraction : Automatically computes core terrain parameters including absolute minimum elevation (lowest single point in the terrain dataset), maximum elevation peak bounds (highest altitude point in the entire dataset), global mean elevation (overall average height across the entire map), and peak cell frequency distribution (how many individual grid squares share that absolute highest elevation).
+
+### 2. Contour Generation Module (contourgenerator.py)
+The system uses a ContourGenerator class to render 2D topographic visualizations from any 2D elevation grid :
+
+Elevation Level Calculation : Supports plotting by a fixed number of levels or by a custom elevation interval (interval) computed from the dataset's elevation bounds.
+
+Isoline & Filled Contour Rendering : Generates labeled contour lines (contourAxes.contour with contourAxes.clabel) alongside optional filled elevation bands (contourAxes.contourf), colorbars, and colormaps (terrain by default) across both square and non-square grids, with support for displaying or saving figures.
 
 ## Installation & Getting Started 
 Follow these steps to set up the development environment and run the project locally using uv.
@@ -71,7 +79,7 @@ python parser.py
 - Build DigitalElevationModelParser class with pure NumPy grid loading and statistical summaries.
 - Establish version control workflow and project repository structure.
 
-[ ] Phase 2: 2D Isoline & Contour Generation
+[DONE on 11.22!] Phase 2: 2D Isoline & Contour Generation
 Implement Matplotlib contour mapping algorithms to render topographic height lines.
 
 [ ] Phase 3: Watershed Tracing Logic
