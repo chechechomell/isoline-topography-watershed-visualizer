@@ -21,7 +21,7 @@ isoline-topography-watershed-visualizer/
 ├── data/                  # For elevation grid datasets (e.g., sample_dem.csv)
 ├── .venv/                 # Python virtual environment (managed via uv)
 ├── parser.py              # Core Digital Elevation Model (DEM) data parser
-├── contour.py             # 2D isoline and filled contour generator
+├── contourgenerator.py    # 2D isoline and filled contour generator
 ├── requirements.txt       # Project dependencies and requirements
 └── README.md              # Project documentation and technical report
 ```
