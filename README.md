@@ -6,24 +6,22 @@ An open-source Python web application designed for processing Digital Elevation 
 Topographic mapping and hydrological analysis are fundamental pillars of geographic information systems (GIS). Understanding how land is shaped and how water flows across hills and valleys is usually done using expensive, complicated professional software (e.g. Proprietary GIS Software). This project is a lightweight, interactive web tool that lets users load elevation grids data, measure the landscape, and view land shapes clearly on their screen without needing any heavy mapping programs.
 
 ## Tech Stack & Environment
-* **Core Language:** Python 
-* **Data Processing & Grid Handling:** NumPy (array parsing and aggregation)
-* **Visualization Engine:** Matplotlib (for 2D contour maps and isoline generation)
-* **Web User Interface:** Streamlit (for interactive web dashboard deployment)
-* **Dependency & Environment Manager:** "uv" (for high performance virtual environments and fast package installation)
+![Tech Stack and Environment](assets/tech_stack.png)
+
+## Project Classes & Methods
+![Project Classes and Methods](assets/classes_and_methods.png)
 
 ## System Architecture & Code Structure
-The project is structured sectionally to separate data ingestion, numerical computation, spatial rendering, and user interface layers.
 
 ```text
 isoline-topography-watershed-visualizer/
-│
-├── data/                  # For elevation grid datasets (e.g., sample_dem.csv)
-├── .venv/                 # Python virtual environment (managed via uv)
-├── parser.py              # Core Digital Elevation Model (DEM) data parser
-├── contourgenerator.py    # 2D isoline and filled contour generator
-├── requirements.txt       # Project dependencies and requirements
-└── README.md              # Project documentation and technical report
+├── data/
+│   └── sample_dem.csv          # Sample 2D elevation grid
+├── parser.py                   # DEM ingestion and basic terrain statistics
+├── contourgenerator.py         # Elevation contour lines and filled band plots
+├── watershedanalyzer.py        # D8 flow direction, flow accumulation, and overlay plots
+├── requirements.txt            # Project dependencies
+└── README.md                   # Documentation and roadmap
 ```
 
 ### 1. Data Ingestion Module (parser.py)
@@ -40,52 +38,36 @@ Elevation Level Calculation : Supports plotting by a fixed number of levels or b
 
 Isoline & Filled Contour Rendering : Generates labeled contour lines (contourAxes.contour with contourAxes.clabel) alongside optional filled elevation bands (contourAxes.contourf), colorbars, and colormaps (terrain by default) across both square and non-square grids, with support for displaying or saving figures.
 
-## Installation & Getting Started 
-Follow these steps to set up the development environment and run the project locally using uv.
+### 3. Watershed Analysis Module (watershedanalyzer.py)
+The system uses a WatershedAnalyzer class to trace downhill water movement and identify drainage pathways from any 2D elevation grid :
 
-Prerequisites
-Ensure you have Python installed and uv configured on your system.
+D8 Flow Direction Calculation : Evaluates all eight surrounding neighbors (North, North-East, East, South-East, South, South-West, West, and North-West) for every grid cell and computes distance-weighted slope drop ((centerElevation - neighborElevation) / stepDistance, accounting for diagonal $\sqrt{2}$ spacing). Assigns direction codes (1–8) toward the steepest downhill neighbor, or 0 for local sinks and flat cells with no lower outlet.
 
-1. Clone the Repository
-git clone [https://github.com/chechechomell/isoline-topography-watershed-visualizer.git](https://github.com/chechechomell/isoline-topography-watershed-visualizer.git)
-cd isoline-topography-watershed-visualizer
+Flow Accumulation & Drainage Tracing : Initializes every cell with a base runoff contribution of 1 and processes cells in descending elevation order (highest to lowest) so upstream flow is resolved before downstream accumulation. Propagates contributing cell counts into each cell's D8 target neighbor to reveal converging channels, stream networks, and main basin outlets across both square and non-square grids.
 
-2. Set Up the Virtual Environment with uv
+Logarithmic Flow & Contour Overlay Visualization : Renders flow accumulation grids using LogNorm color scaling (pcolormesh) so wide ranges of contributing cell counts remain visually clear without washing out smaller channels. Also supports elevation contour overlays (contour and clabel), per-cell accumulation labels, axis tick alignment, and figure display or export to disk.
+
+## Getting Started 
+Set up the environment and run modules with uv or standard Python :
+
 ```text
 uv venv
-```
-
-To activate the environment:
-```text
-in Powershell: .venv\Scripts\Activate
-in macOS/Linux: source .venv/bin/activate
-```
-
-3. Install Dependencies
-Install the required packages listed in requirements.txt:
-```text
 uv pip install -r requirements.txt
-```
-
-4. Run the DEM Parser Test
-Execute the parser script to verify data loading and test the sample elevation grid:
-```text
-python parser.py
+uv run python watershedanalyzer.py
 ```
 
 ## Project Development Roadmap
-
-[DONE on 11.15!] Phase 1: Core Data Ingestion & Architecture
+**[DONE on 11.15!] Phase 1 [parser.py]: Core Data Ingestion & Architecture**
 - Build DigitalElevationModelParser class with pure NumPy grid loading and statistical summaries.
 - Establish version control workflow and project repository structure.
 
-[DONE on 11.22!] Phase 2: 2D Isoline & Contour Generation
+**[DONE on 11.22!] Phase 2 [contourgenerator.py]: 2D Isoline & Contour Generation**
 Implement Matplotlib contour mapping algorithms to render topographic height lines.
 
-[ ] Phase 3: Watershed Tracing Logic
+**[DONE on 11.27!] Phase 3 [watershedanalyzer.py]: Watershed Tracing Logic**
 Compute flow direction matrices and accumulation grids to trace drainage basins.
 
-[ ] Phase 4: Streamlit Web Dashboard UI
+**[] Phase 4: Streamlit Web Dashboard UI**
 Build an interactive web frontend allowing users to upload custom DEM files and adjust contour intervals in real time.
 
 ## License
