@@ -32,12 +32,12 @@ Build an interactive web frontend allowing users to upload custom DEM files and 
 ![Source Code Files & Its Roles](assets/mindmaps/source_code_roles.png)
 
 ## Phase 2: 2D Topographic Isolines Output (Sample Data)
-![Phase 2 Output Sample 1](assets\phase2\2.2_test_levels=8.png)
-![Phase 2 Output Sample 2](assets\phase2\2.2_trial_with_non_square_grid_(4rowx6column).png)
+![Phase 2 Output Sample 1](assets/phase2/2.2_test_levels=8.png)
+![Phase 2 Output Sample 2](assets/phase2/2.2_trial_with_non_square_grid_(4rowx6column).png)
 
 ## Phase 3: Flow Accumulation and Elevation Contours Output (Sample Data)
-![Phase 3 Output Sample 1](assets\phase3\3.3_trial_with_contour_overlay.png)
-![Phase 3 Output Sample 2](assets\phase3\3.3_trial_with_non-square_grid.png)
+![Phase 3 Output Sample 1](assets/phase3/3.3_trial_with_contour_overlay.png)
+![Phase 3 Output Sample 2](assets/phase3/3.3_trial_with_non-square_grid.png)
 
 ## Getting Started 
 Set up the environment and run modules with uv or standard Python :
